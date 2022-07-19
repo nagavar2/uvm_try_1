@@ -19,7 +19,10 @@ function result_transaction predict_result(sequence_transactions cmd);
    result_transaction predicted;
       
    predicted = new("predicted");
-      
+   //prediction of done signal
+   predicted.done = 1;
+
+   //prediction for the operation
    case (cmd.op)
      2'b00: predicted.result = cmd.operandA | cmd.operandB;
      2'b01: predicted.result = cmd.operandA & cmd.operandB;
@@ -37,30 +40,34 @@ endfunction : predict_result
       string data_str;
       sequence_transactions cmd;
       result_transaction predicted;
+       //`uvm_info ("SCOREBOARD", $sformatf("From Driver Result:%b done:%b",t.result,t.done),UVM_HIGH);
 
       //do
        //  if (!gp.try_get(cmd))
        //  $fatal(1, "Missing command in self checker");
        //  else
       //while ((cmd.op == 0) || (cmd.op == 1) || (cmd.op == 2) || (cmd.op == 3));
+     
       if (!cmd_f.try_get(cmd)) begin
          `uvm_info("SCOREBOARD","No cmd",UVM_HIGH);
          `uvm_info ("SCOREBOARD", $sformatf("FROM ARUG Result:%b done:%b",t.result,t.done),UVM_HIGH);
       end
       else begin
-      predicted = predict_result(cmd);
+         //if(t.done) begin
+         predicted = predict_result(cmd);
       
-      data_str = {                    cmd.convert2string(), 
-                  " ==>  Actual "  ,    t.convert2string(), 
-                  "/Predicted ",predicted.convert2string()};
+         data_str = {                    cmd.convert2string(), 
+                     " ==>  Actual "  ,    t.convert2string(), 
+                     "/Predicted ",predicted.convert2string()};
 
-      //`uvm_info("SELF CHECKER",{"CHECK:",data_str},UVM_NONE);
+         //`uvm_info("SELF CHECKER",{"CHECK:",data_str},UVM_NONE);
       
-      if (!predicted.compare(t))
-        `uvm_error("SELF CHECKER", {"FAIL: ",data_str})
-        //$display("%s",data_str);
-      else
-        `uvm_info ("SELF CHECKER", {"PASS: ", data_str},UVM_HIGH)
-      end
+         if (!predicted.compare(t))
+            `uvm_error("SELF CHECKER", {"FAIL: ",data_str})
+            //$display("%s",data_str);
+         else
+            `uvm_info ("SELF CHECKER", {"PASS: ", data_str},UVM_HIGH)
+         end
+      //end
    endfunction : write
 endclass : scoreboard

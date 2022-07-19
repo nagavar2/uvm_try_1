@@ -1,10 +1,11 @@
 package alu_pkg;
     import uvm_pkg::*;
-    `include "sequencer.sv"
+    `include "sequence_item.sv"
     typedef uvm_sequencer #(sequence_transactions) sequencer;
     `include "uvm_macros.svh"
     
     `include "sequence_random.sv"
+    `include "sequence_or.sv"
     `include "seq_run.sv"
 
     
@@ -13,6 +14,7 @@ package alu_pkg;
     `include "result_transaction.sv"
     `include "scoreboard.sv"
     `include "driver.sv"
+    `include "coverage.sv"
     `include "passive_monitor.sv"
     `include "active_monitor.sv"
     

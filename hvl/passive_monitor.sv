@@ -35,6 +35,7 @@ function void write_to_monitor(bit [3:0] A, B,
     cmd.operandA = A;
     cmd.operandB = B;
     cmd.op = opcode;
+    //if(cmd.done)
     ap.write(cmd);
     //pp.write(cmd);
     //cmd_f.try_put(cmd);
