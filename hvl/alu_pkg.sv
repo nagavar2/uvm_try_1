@@ -6,6 +6,8 @@ package alu_pkg;
     
     `include "sequence_random.sv"
     `include "sequence_or.sv"
+    `include "seq_run_random.sv"
+    `include "seq_run_or.sv"
     `include "seq_run.sv"
 
     
@@ -21,6 +23,8 @@ package alu_pkg;
 
     `include "environment.sv"
     `include "test_base.sv"
+    `include "test_random.sv"
+    `include "test_or.sv"
     `include "full_test.sv"
 endpackage
 
