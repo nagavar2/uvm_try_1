@@ -22,7 +22,7 @@ class driver extends uvm_driver #(sequence_transactions);
             // Forcing reset signal
             bfm.resetn = 1;
             seq_item_port.get_next_item(cmd);
-            bfm.send_op(cmd.operandA,cmd.operandB,cmd.op,result,done);
+            bfm.send_op(cmd.operandA,cmd.operandB,cmd.op,result);
             cmd.result = result;
             cmd.done = done;
             seq_item_port.item_done();
